@@ -27,5 +27,8 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
+    - name: Check AWS credentials
+      run: aws sts get-caller-identity
+
     - name: Terraform Plan
       run: terraform plan
