@@ -1,3 +1,12 @@
+resource "aws_key_pair" "ec2_key_pair" {
+  key_name   = "ec2-key"
+  public_key = var.ec2_public_key
+}
+
+output "key_name" {
+  value = aws_key_pair.ec2_key_pair.key_name
+}
+
 resource "aws_instance" "web" {
   ami           = var.ami
   instance_type = var.instance_type
@@ -11,13 +20,4 @@ resource "aws_instance" "web" {
   tags = {
     Name = var.instance_name
   }
-}
-
-resource "aws_key_pair" "ec2_key_pair" {
-  key_name   = "ec2-key"
-  public_key = var.ec2_public_key
-}
-
-output "key_name" {
-  value = aws_key_pair.ec2_key_pair.key_name
 }
