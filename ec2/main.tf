@@ -14,7 +14,7 @@ resource "aws_instance" "web" {
 }
 
 resource "aws_key_pair" "ec2_key_pair" {
-  key_name   = "my-ec2-key"
+  key_name   = "ec2-key"
   public_key = var.ec2_public_key
 }
 
