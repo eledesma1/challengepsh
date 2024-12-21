@@ -15,5 +15,9 @@ resource "aws_instance" "web" {
 
 resource "aws_key_pair" "ec2_key_pair" {
   key_name   = "my-ec2-key"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = var.ec2_public_key
+}
+
+output "key_name" {
+  value = aws_key_pair.ec2_key_pair.key_name
 }

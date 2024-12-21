@@ -17,3 +17,7 @@ variable "instance_name" {
 variable "instance_profile" {
   type        = string
 }
+
+variable "ec2_public_key" {
+  type        = string
+}
