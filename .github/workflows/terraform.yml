@@ -29,5 +29,10 @@ jobs:
     - name: Check AWS credentials
       run: aws sts get-caller-identity
 
-    - name: Terraform Plan
-      run: terraform plan
+    - name: Terraform Refresh
+      run: terraform refresh
+
+    - name: Terraform Plan with Debug
+      run: |
+        export TF_LOG=DEBUG
+        terraform plan
