@@ -33,6 +33,11 @@ jobs:
       run: |
         echo "AWS profile set to my_profile"
 
+    - name: Set RDS credentials as environment variables
+      run: |
+        echo "TF_VAR_rds_username=${{ secrets.RDS_USERNAME }}" >> $GITHUB_ENV
+        echo "TF_VAR_rds_password=${{ secrets.RDS_PASSWORD }}" >> $GITHUB_ENV
+
     - name: Terraform Init
       run: terraform init
 

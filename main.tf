@@ -24,9 +24,37 @@ module "ec2" {
   security_group_ids = [module.security_groups.ec2_sg_id]
 }
 
+module "rds_secret" {
+  source             = "./secret_manager"
+  secret_name        = "rds-credentials"
+  secret_description = "RDS PostgreSQL credentials"
+  rds_username       = var.rds_username
+  rds_password       = var.rds_password
+}
 
-module "rds" {
-  source               = "./rds"
-  private_subnet_ids   = [module.vpc.private_subnetA_ids[0], module.vpc.private_subnetB_ids[0]]
+resource "aws_db_instance" "postgres" {
+  allocated_storage    = 20
+  engine               = "postgres"
+  engine_version       = "14.9"
+  instance_class       = "db.t3.micro"
+  db_name              = "challenge_db"
+
+  username             = jsondecode(module.rds_secret.secret_string)["username"]
+  password             = jsondecode(module.rds_secret.secret_string)["password"]
+
   vpc_security_group_ids = [module.security_groups.rds_sg_id]
+  skip_final_snapshot  = true
+
+  tags = {
+    Name = "challenge-postgres"
+  }
+}
+
+resource "aws_db_subnet_group" "rds" {
+  name       = "rds-subnet-group"
+  subnet_ids = [module.vpc.private_subnetA_ids[0], module.vpc.private_subnetB_ids[0]]
+
+  tags = {
+    Name = "rds-subnet-group"
+  }
 }
