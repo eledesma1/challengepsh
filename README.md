@@ -6,6 +6,7 @@ This Terraform template includes the following modules:
 - security_groups:
     - Creates a security group for EC2, with a policy that opens port 22 to my IP address and allows communication with the database.
     - Creates another security group for the RDS instance.
+- secret_manager: creates the secret for the RDS keys
 - vpc:
     - Creates a VPC with four subnets: two private and two public.
     - Generates the corresponding route table and creates a NAT gateway to enable communication between the RDS instance and the EC2 instance.
